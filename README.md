@@ -2,8 +2,8 @@
 
 An educational ecommerce application for hot sauces and spices, built with Angular 19, TypeScript, SCSS and PrimeNG.
 
-# 🚀 Live Demo
-# 👉 https://ecommerce-web-xi-rose.vercel.app/home
+## 🚀 Live Demo
+## 👉 https://ecommerce-web-xi-rose.vercel.app/home
 
 ## Features
 
