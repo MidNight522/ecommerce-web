@@ -23,7 +23,7 @@ npm ci
 npm start
 ```
 
-Open `http://localhost:4200`. The API URL is configured in `src/environment/environment.ts` and defaults to `http://localhost:5000/api`.
+Open `http://localhost:4200`. The API URL is configured in `src/environment/environment.ts` and currently points to the deployed API on Render. To use a local API, change it to `http://localhost:5000/api`.
 
 ```bash
 npm run build
