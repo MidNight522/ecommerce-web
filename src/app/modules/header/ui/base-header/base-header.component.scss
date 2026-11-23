@@ -1,0 +1,107 @@
+.site-header {
+  background: var(--p-content-background);
+  border-bottom: 1px solid var(--p-content-border-color);
+  font-family: system-ui, sans-serif;
+}
+
+.header-inner,
+.brand,
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-inner {
+  min-height: 96px;
+  padding-block: 12px;
+  flex-wrap: wrap;
+  gap: 16px 24px;
+}
+
+.site-header a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.brand {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.header-nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px clamp(12px, 2vw, 24px);
+  margin-inline-start: auto;
+}
+
+.header-actions {
+  flex-wrap: wrap;
+}
+
+.site-header .sign-in,
+.site-header .register {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 92px;
+  min-height: 34px;
+  padding: 4px 12px;
+  border: 1px solid transparent;
+  //   border: 1px solid var(--p-content-border-color);
+  border-radius: 9px;
+  font-size: 16px;
+  line-height: 1.25;
+  border-radius: 8px;
+}
+
+.site-header .sign-in {
+  background-color: #d9d9d9;
+  border-color: #808080;
+  color: #132016;
+}
+
+.site-header.register {
+  background: var(--p-text-color);
+  color: var(--p-content-background);
+}
+
+.site-header .register {
+  background-color: #132016;
+  color: #fff;
+}
+
+.site-header .sign-in:hover,
+.site-header .register:hover {
+  filter: brightness(0.92);
+}
+
+.header-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+}
+
+.header-icon .pi {
+  font-size: 20px;
+}
+
+:host-context(.app-dark) .header-icon img {
+  filter: brightness(0) invert(1);
+}
+
+@media (max-width: 720px) {
+  .brand {
+    flex-basis: 100%;
+  }
+
+  .header-nav {
+    margin-inline-start: 0;
+  }
+}

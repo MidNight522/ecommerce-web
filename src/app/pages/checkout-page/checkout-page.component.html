@@ -1,0 +1,101 @@
+<main class="base-container checkout-page">
+  <a class="back-link" routerLink="/cart">← Back to cart</a>
+  <h1>Order Details</h1>
+
+  @if (items().length > 0) {
+    <fieldset class="checkout-fields" [disabled]="saving()">
+      <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
+        <section class="checkout-card" aria-labelledby="shipping-title">
+          <h2 id="shipping-title">Shipping information</h2>
+
+          <div class="checkout-field">
+            <label for="shipping-name">Full Name *</label>
+            <input
+              pInputText
+              id="shipping-name"
+              formControlName="name"
+              autocomplete="name"
+              maxlength="200"
+            />
+          </div>
+
+          <div class="checkout-field">
+            <label for="shipping-phone">Phone number *</label>
+            <input
+              pInputText
+              id="shipping-phone"
+              type="tel"
+              formControlName="phone"
+              autocomplete="tel"
+              maxlength="40"
+            />
+          </div>
+
+          <div class="checkout-field">
+            <label for="shipping-city">City *</label>
+            <input
+              pInputText
+              id="shipping-city"
+              formControlName="city"
+              autocomplete="address-level2"
+              maxlength="100"
+            />
+          </div>
+
+          <div class="checkout-field">
+            <label for="shipping-address">Shipping address *</label>
+            <textarea
+              pTextarea
+              id="shipping-address"
+              formControlName="address"
+              autocomplete="street-address"
+              maxlength="500"
+              rows="3"
+            ></textarea>
+          </div>
+
+          @if (checkoutForm.touched && checkoutForm.invalid) {
+            <p class="form-error" role="alert">
+              Please complete all required fields and check their length.
+            </p>
+          }
+        </section>
+
+        <fieldset class="checkout-card payment-card">
+          <legend>Payment Method</legend>
+
+          @for (method of paymentMethods; track method.value) {
+            <label class="payment-option">
+              <input
+                type="radio"
+                formControlName="paymentMethod"
+                [value]="method.value"
+              />
+              {{ method.label }}
+            </label>
+          }
+        </fieldset>
+
+        <section class="order-summary" aria-labelledby="summary-title">
+          <h2 id="summary-title">Order Summary</h2>
+
+          <p class="summary-total">
+            <span>Total</span>
+            <strong>{{ totalCents() / 100 | currency: "USD" }}</strong>
+          </p>
+
+          <button class="pay-button" type="submit" [disabled]="saving()">
+            {{ saving() ? "Placing order…" : "Place order" }}
+          </button>
+
+          <p class="payment-note">
+            Payment method will be saved. Online payment is not connected yet.
+          </p>
+        </section>
+      </form>
+    </fieldset>
+  } @else {
+    <p>Your cart is empty.</p>
+    <a routerLink="/home">Browse products</a>
+  }
+</main>

@@ -1,0 +1,180 @@
+<main class="base-container product-editor">
+  <a class="back-link" routerLink="/admin/products"> ← Product Management </a>
+
+  <h1>{{ productId() ? "Edit Product" : "Add Product" }}</h1>
+
+  @if (productId() && !loading() && !loadError()) {
+    <p class="product-visibility" [class.is-hidden]="isHidden()" role="status">
+      <i
+        [class]="isHidden() ? 'pi pi-eye-slash' : 'pi pi-eye'"
+        aria-hidden="true"
+      ></i>
+      {{
+        isHidden()
+          ? "Hidden — not visible in the catalog"
+          : "Visible in the catalog"
+      }}
+    </p>
+  }
+
+  @if (loading()) {
+    <p class="loading-state" role="status">Loading product…</p>
+  } @else if (loadError()) {
+    <p role="alert">Unable to load this product. Return to the product list.</p>
+  } @else {
+    <form [formGroup]="productForm" (ngSubmit)="save()">
+      <fieldset class="editor-fields" [disabled]="saving()">
+        <section class="image-control" aria-labelledby="image-title">
+          <div class="image-preview">
+            <img
+              [src]="productForm.controls.image_url.value || 'base-logo.svg'"
+              alt="Product preview"
+              (error)="onImageError($event)"
+            />
+          </div>
+
+          <div class="form-field">
+            <label id="image-title" for="product-image">Image URL</label>
+            <input
+              id="product-image"
+              type="url"
+              formControlName="image_url"
+              placeholder="https://example.com/sauce.webp"
+            />
+            <small>Use a public link to a product image.</small>
+
+            @if (
+              productForm.controls.image_url.touched &&
+              productForm.controls.image_url.invalid
+            ) {
+              <small class="field-error"
+                >Enter a valid HTTP or HTTPS URL.</small
+              >
+            }
+          </div>
+        </section>
+
+        <section class="editor-card" aria-labelledby="details-title">
+          <h2 id="details-title">Product information</h2>
+
+          <div class="form-field">
+            <label for="product-name">Title *</label>
+            <input
+              id="product-name"
+              formControlName="name"
+              placeholder="Ghost Pepper Powder"
+              maxlength="500"
+            />
+
+            @if (
+              productForm.controls.name.touched &&
+              productForm.controls.name.invalid
+            ) {
+              <small class="field-error">Enter a product name.</small>
+            }
+          </div>
+
+          <div class="form-field">
+            <label for="product-description">Description</label>
+            <textarea
+              id="product-description"
+              formControlName="description"
+              placeholder="Describe the flavour, heat and suggested uses."
+              rows="4"
+              maxlength="10000"
+            ></textarea>
+          </div>
+
+          <div class="number-fields">
+            <div class="form-field">
+              <label for="product-price">Price, USD *</label>
+              <input
+                id="product-price"
+                type="number"
+                formControlName="price"
+                placeholder="6.66"
+                min="0"
+                step="0.01"
+              />
+            </div>
+
+            <div class="form-field">
+              <label for="product-stock">Stock *</label>
+              <input
+                id="product-stock"
+                type="number"
+                formControlName="stock"
+                min="0"
+                step="1"
+              />
+            </div>
+
+            <div class="form-field">
+              <label for="product-scoville">Scoville, SHU</label>
+              <input
+                id="product-scoville"
+                type="number"
+                formControlName="scoville"
+                placeholder="15000"
+                min="0"
+                step="1"
+              />
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label for="product-category">Category</label>
+            <select id="product-category" formControlName="product_type">
+              <option value="">Select a category</option>
+              @for (category of categories; track category) {
+                <option [value]="category">{{ category }}</option>
+              }
+            </select>
+          </div>
+
+          @if (productForm.touched && productForm.invalid) {
+            <p class="field-error" role="alert">
+              Check the fields. Price must be non-negative with up to two
+              decimal places. Stock and Scoville must be non-negative whole
+              numbers.
+            </p>
+          }
+        </section>
+      </fieldset>
+
+      <div class="editor-actions">
+        <div class="editor-actions-group">
+          <button class="save-button" type="submit" [disabled]="saving()">
+            {{ saving() ? "Please wait…" : "Save" }}
+          </button>
+
+          @if (!saving()) {
+            <a class="cancel-button" routerLink="/admin/products">Cancel</a>
+          }
+        </div>
+
+        @if (productId()) {
+          <div class="editor-actions-group">
+            <button
+              class="visibility-button"
+              type="button"
+              [disabled]="saving()"
+              (click)="toggleVisibility()"
+            >
+              {{ isHidden() ? "Show" : "Hide" }}
+            </button>
+
+            <button
+              class="delete-button"
+              type="button"
+              [disabled]="saving()"
+              (click)="deleteProduct()"
+            >
+              Delete
+            </button>
+          </div>
+        }
+      </div>
+    </form>
+  }
+</main>

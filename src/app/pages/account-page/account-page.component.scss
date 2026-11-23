@@ -1,0 +1,156 @@
+.account-page {
+  max-width: 640px;
+  padding-block: 40px;
+  font-family: system-ui, sans-serif;
+}
+
+.account-tabs {
+  display: flex;
+  margin-bottom: 24px;
+}
+
+.account-tabs > * {
+  padding: 8px 12px;
+  border: 0;
+  border-bottom: 1px solid var(--p-content-border-color);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+}
+
+.account-tabs [aria-pressed="false"] {
+  color: var(--p-text-muted-color);
+}
+
+.account-tabs [aria-pressed="true"] {
+  border-bottom-color: currentColor;
+}
+
+.account-tabs button {
+  cursor: pointer;
+}
+
+.account-card,
+.account-field {
+  display: grid;
+}
+
+.account-admin {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+.account-admin a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: 1px solid var(--p-content-border-color);
+  border-radius: 7px;
+  color: inherit;
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.account-admin a:hover {
+  border-color: var(--p-primary-color);
+}
+
+.account-card {
+  gap: 20px;
+  padding: clamp(16px, 4vw, 24px);
+  border: 1px solid var(--p-content-border-color);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--p-content-background) 95%, black);
+}
+
+.account-card h1 {
+  font-size: 22px;
+}
+
+.account-field {
+  gap: 6px;
+}
+
+.account-field input,
+.account-field textarea {
+  width: 100%;
+  min-width: 0;
+}
+
+.orders-card,
+.orders-pagination {
+  border: 1px solid var(--p-content-border-color);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--p-content-background) 95%, black);
+}
+
+.orders-card {
+  overflow: hidden;
+}
+
+.orders-table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 14px;
+}
+
+.orders-table th,
+.orders-table td {
+  padding: 16px clamp(8px, 2vw, 20px);
+  vertical-align: top;
+  overflow-wrap: anywhere;
+}
+
+.orders-table th {
+  background: #ff9c91;
+  color: #132016;
+}
+
+.orders-table tbody tr + tr {
+  border-top: 1px solid var(--p-content-border-color);
+}
+
+.orders-table time {
+  display: block;
+  margin-top: 6px;
+  color: var(--p-text-muted-color);
+}
+
+.orders-pagination {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 24px;
+  padding: 16px;
+}
+
+.orders-pagination button {
+  padding: 8px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.orders-pagination button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.profile-fields {
+  display: grid;
+  gap: 20px;
+  min-width: 0;
+  border: 0;
+}
+
+.field-error {
+  color: var(--p-primary-color);
+  font-size: 12px;
+  line-height: 1.4;
+}

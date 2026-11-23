@@ -1,0 +1,131 @@
+<main class="base-container admin-page">
+  <a class="back-link" routerLink="/account">← Back to account</a>
+
+  <div class="admin-tabs">
+    <span aria-current="page">Product Management</span>
+    <a routerLink="/admin/dashboard">Dashboard</a>
+  </div>
+
+  <h1>Admin — Product Stock</h1>
+
+  <a class="admin-button add-product" routerLink="/admin/products/new">
+    <i class="pi pi-plus" aria-hidden="true"></i>
+    Add Product
+  </a>
+
+  @if (productsState$ | async; as state) {
+    @if (state.error) {
+      <p role="alert">Unable to load products.</p>
+    } @else {
+      <div class="admin-table-wrapper">
+        <table class="admin-table" aria-label="Product management">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Name</th>
+              <th scope="col">Description</th>
+              <th scope="col">Price</th>
+              <th scope="col">Category</th>
+              <th scope="col">Stock</th>
+              <th scope="col">Created</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            @for (
+              product of state.products.slice(
+                (page() - 1) * pageSize,
+                page() * pageSize
+              );
+              track product.id
+            ) {
+              <tr [class.product-hidden]="product.is_hidden">
+                <td>
+                  <span class="product-id" [title]="product.id">
+                    {{ product.id.slice(0, 8) }}…
+                  </span>
+                </td>
+
+                <td>
+                  {{ product.name }}
+                  @if (product.is_hidden) {
+                    <span class="visibility-badge">
+                      <i class="pi pi-eye-slash" aria-hidden="true"></i>
+                      Hidden
+                    </span>
+                  }
+                </td>
+
+                <td>
+                  <p
+                    class="table-description"
+                    [title]="product.description ?? ''"
+                  >
+                    {{ product.description || "—" }}
+                  </p>
+                </td>
+
+                <td class="price-cell">
+                  {{ product.price | currency: "USD" }}
+                </td>
+
+                <td>{{ product.product_type || "—" }}</td>
+                <td>{{ product.stock }}</td>
+                <td class="date-cell">
+                  {{ product.created_at | date: "yyyy-MM-dd" }}
+                </td>
+
+                <td>
+                  <a
+                    class="admin-button"
+                    [routerLink]="['/admin/products', product.id, 'edit']"
+                    [attr.aria-label]="'Edit ' + product.name"
+                  >
+                    Edit
+                  </a>
+                </td>
+              </tr>
+            } @empty {
+              <tr>
+                <td colspan="8">No products yet.</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      @if (getPageCount(state.products.length) > 1) {
+        <nav class="admin-pagination" aria-label="Product management pages">
+          <button
+            type="button"
+            [disabled]="page() === 1"
+            (click)="page.set(page() - 1)"
+          >
+            ← Previous
+          </button>
+
+          @for (number of getPageNumbers(state.products.length); track number) {
+            <button
+              type="button"
+              [attr.aria-current]="page() === number ? 'page' : null"
+              (click)="page.set(number)"
+            >
+              {{ number }}
+            </button>
+          }
+
+          <button
+            type="button"
+            [disabled]="page() === getPageCount(state.products.length)"
+            (click)="page.set(page() + 1)"
+          >
+            Next →
+          </button>
+        </nav>
+      }
+    }
+  } @else {
+    <p class="loading-state" role="status">Loading products…</p>
+  }
+</main>

@@ -1,0 +1,115 @@
+<main class="base-container product-page">
+  <a class="back-to-products" routerLink="/home">
+    <i class="pi pi-arrow-left" aria-hidden="true"></i>
+    Back to products
+  </a>
+
+  @if (productState$ | async; as state) {
+    @if (state.error) {
+      <div class="product-error" role="alert">
+        <p>Unable to load this product.</p>
+        <a routerLink="/home">Back to products</a>
+      </div>
+    } @else if (state.product) {
+      @let product = state.product;
+
+      <article class="product-details">
+        <div class="product-image">
+          <img
+            [src]="product.image_url || 'base-logo.svg'"
+            [alt]="product.name"
+            (error)="onImageError($event)"
+          />
+        </div>
+
+        <div class="product-info">
+          <h1>{{ product.name }}</h1>
+
+          @if (product.scoville !== null) {
+            <span class="heat-badge">
+              <i class="pi pi-bolt" aria-hidden="true"></i>
+              {{ product.scoville | number }} SHU
+            </span>
+          }
+
+          <strong class="product-price">
+            {{ product.price | currency: "USD" }}
+          </strong>
+
+          <p class="product-description">{{ product.description }}</p>
+
+          @if (product.stock === 0) {
+            <p class="stock-message">Currently out of stock</p>
+          }
+
+          <div class="product-actions">
+            <button
+              class="add-button"
+              type="button"
+              [disabled]="product.stock === 0"
+              (click)="addToCart(product)"
+            >
+              Add to Cart
+            </button>
+
+            <a class="view-cart-button" routerLink="/cart">
+              <i class="pi pi-shopping-bag" aria-hidden="true"></i>
+              View cart
+            </a>
+          </div>
+        </div>
+
+        <details class="product-specifications" open>
+          <summary>Technical Specifications</summary>
+
+          <ul>
+            @if (product.scoville !== null) {
+              <li>Scoville Heat Units: {{ product.scoville | number }} SHU</li>
+            }
+
+            @if (product.product_type) {
+              <li>Product type: {{ product.product_type }}</li>
+            }
+
+            <li>Available stock: {{ product.stock }}</li>
+          </ul>
+        </details>
+      </article>
+
+      <section class="product-reviews" aria-labelledby="reviews-title">
+        <div class="reviews-heading">
+          <h2 id="reviews-title">Latest reviews</h2>
+          <span>Demo reviews</span>
+        </div>
+
+        <div class="reviews-grid">
+          @for (review of reviews; track review.id) {
+            <article class="review-card">
+              <p
+                class="review-stars"
+                role="img"
+                [attr.aria-label]="review.rating + ' out of 5 stars'"
+              >
+                {{ review.stars }}
+              </p>
+
+              <h3>{{ review.title }}</h3>
+              <p class="review-text">{{ review.text }}</p>
+
+              <div class="review-author">
+                <span class="review-avatar" aria-hidden="true">
+                  {{ review.initials }}
+                </span>
+                <span>{{ review.author }}</span>
+              </div>
+            </article>
+          }
+        </div>
+      </section>
+    } @else {
+      <p class="loading-state" role="status">Loading product…</p>
+    }
+  } @else {
+    <p class="loading-state" role="status">Loading product…</p>
+  }
+</main>

@@ -1,0 +1,181 @@
+.admin-page {
+  padding-block: 40px;
+  font-family: system-ui, sans-serif;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 24px;
+  color: var(--p-text-muted-color);
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.admin-tabs {
+  display: flex;
+  margin-bottom: 28px;
+}
+
+.admin-tabs > * {
+  padding: 8px 12px;
+  border: 0;
+  border-bottom: 1px solid var(--p-content-border-color);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 14px;
+}
+
+.admin-tabs [aria-current="page"] {
+  border-bottom-color: currentColor;
+}
+
+.admin-tabs button:disabled {
+  opacity: 0.5;
+}
+
+.admin-page h1 {
+  margin-bottom: 24px;
+  font-size: 24px;
+}
+
+.admin-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 34px;
+  padding: 7px 12px;
+  border: 0;
+  border-radius: 7px;
+  background: #c90000;
+  color: white;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.admin-button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.add-product {
+  margin-bottom: 28px;
+}
+
+.admin-table-wrapper {
+  overflow-x: auto;
+  border: 1px solid var(--p-content-border-color);
+  border-radius: 8px;
+  background: #f5f5f5;
+}
+
+.admin-table {
+  width: 100%;
+  min-width: 1000px;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 13px;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 20px 16px;
+  vertical-align: middle;
+}
+
+.admin-table th {
+  background: #ff9c91;
+  color: #132016;
+  font-weight: 700;
+}
+
+.admin-table tbody tr + tr {
+  border-top: 1px solid var(--p-content-border-color);
+}
+
+.admin-table tbody tr:hover {
+  background: rgb(127 127 127 / 5%);
+}
+
+.product-id,
+.price-cell,
+.date-cell {
+  white-space: nowrap;
+}
+
+.table-description {
+  display: -webkit-box;
+  max-width: 220px;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-height: 1.5;
+}
+
+.admin-pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 28px;
+  padding: 20px 12px;
+  border: 1px solid var(--p-content-border-color);
+  border-radius: 8px;
+  background: #f5f5f5;
+}
+
+.admin-pagination button {
+  min-width: 34px;
+  min-height: 34px;
+  padding: 6px 10px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.admin-pagination [aria-current="page"] {
+  background: #132016;
+  color: white;
+}
+
+.admin-pagination button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+:host-context(.app-dark) .admin-table-wrapper,
+:host-context(.app-dark) .admin-pagination {
+  background: var(--p-content-background);
+}
+
+.admin-table .product-hidden {
+  background: rgb(201 0 0 / 4%);
+}
+
+.visibility-badge {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  width: fit-content;
+  margin-top: 6px;
+  padding: 4px 7px;
+  border-radius: 5px;
+  background: rgb(201 0 0 / 10%);
+  color: var(--p-text-color);
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.admin-tabs a {
+  text-decoration: none;
+}

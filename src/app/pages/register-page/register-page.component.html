@@ -1,0 +1,88 @@
+<main>
+  <section class="register-page">
+    <div class="register-hero">
+      <p-card class="register-card">
+        <ng-template #title>
+          <h1 class="register-title">Register</h1>
+        </ng-template>
+        <form
+          class="register-form"
+          [formGroup]="registerForm"
+          (ngSubmit)="onSubmit()"
+        >
+          <div class="register-form-item">
+            <label for="name"> Name </label>
+            <input
+              type="name"
+              pInputText
+              id="name"
+              formControlName="name"
+              placeholder="What's your name?"
+            />
+
+            <label for="email"> Email *</label>
+            <input
+              type="email"
+              pInputText
+              id="email"
+              formControlName="email"
+              placeholder="Enter your email"
+            />
+            @if (
+              registerForm.controls.email.touched &&
+              registerForm.controls.email.invalid
+            ) {
+              <p-message severity="error" variant="simple" size="small">{{
+                registerForm.controls.email.errors?.["required"]
+                  ? "Email is required"
+                  : "Invalid email"
+              }}</p-message>
+            }
+          </div>
+
+          <div class="register-form-item password-field">
+            <label for="password"> Password *</label>
+            <p-password
+              inputId="password"
+              formControlName="password"
+              placeholder="Enter your password"
+              autocomplete="current-password"
+              [toggleMask]="true"
+              [feedback]="true"
+              [fluid]="true"
+            />
+            @if (
+              registerForm.controls.password.touched &&
+              registerForm.controls.password.invalid
+            ) {
+              <p-message severity="error" variant="simple" size="small">{{
+                registerForm.controls.password.errors?.["required"]
+                  ? "Password is required"
+                  : "Invalid password"
+              }}</p-message>
+            }
+          </div>
+
+          <label class="remember-me">
+            <input type="checkbox" formControlName="rememberMe" />
+            Remember me
+          </label>
+
+          <button
+            [loading]="loading()"
+            [disabled]="loading()"
+            type="submit"
+            pButton
+          >
+            Register
+          </button>
+
+          <p class="register-register-text">
+            Already have an account?
+            <a pButton class="p-button-link" routerLink="/login">Login</a>
+          </p>
+        </form>
+      </p-card>
+    </div>
+  </section>
+</main>

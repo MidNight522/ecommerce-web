@@ -1,1 +1,106 @@
 /* You can add global styles to this file, and also import other style files */
+@import "primeicons/primeicons.css";
+@import "primeflex/primeflex.css";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--p-content-background);
+  color: var(--p-text-color);
+}
+
+:root {
+  --content-max-width: 1312px;
+  --page-gutter: 16px;
+}
+
+.base-container {
+  width: calc(100% - 2 * var(--page-gutter));
+  max-width: var(--content-max-width);
+  margin-inline: auto;
+}
+app-login-page .p-password-toggle-mask-icon {
+  cursor: pointer;
+  transition: color 150ms ease;
+}
+
+app-login-page .p-password-toggle-mask-icon:hover {
+  color: var(--p-primary-color);
+}
+
+.register-page .password-field:has(.p-password-overlay) {
+  padding-bottom: 64px;
+}
+
+//button
+.site-header .header-icon {
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 40px;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.site-header .header-icon .pi {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.site-header .header-icon:hover {
+  background: var(--p-content-hover-background);
+}
+
+.site-header .header-icon:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+.app-dark .site-header .header-icon img {
+  filter: brightness(0) invert(1);
+}
+
+//loading
+
+.loading-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 160px;
+  color: var(--p-text-muted-color);
+  font:
+    14px system-ui,
+    sans-serif;
+}
+
+.loading-state::before {
+  content: "";
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  border: 3px solid var(--p-content-border-color);
+  border-top-color: var(--p-primary-color);
+  border-radius: 50%;
+  animation: loading-spin 800ms linear infinite;
+}
+
+@keyframes loading-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loading-state::before {
+    animation: none;
+  }
+}

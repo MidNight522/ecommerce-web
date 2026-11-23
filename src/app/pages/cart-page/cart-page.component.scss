@@ -1,0 +1,130 @@
+.cart-page {
+  max-width: 640px;
+  padding-block: 48px;
+  font-family: system-ui, sans-serif;
+}
+
+.cart-page h1 {
+  margin-bottom: 40px;
+  font-size: 24px;
+}
+
+.cart-layout,
+.cart-items {
+  display: grid;
+  gap: clamp(24px, 5vw, 48px);
+}
+
+.cart-item {
+  display: grid;
+  grid-template-columns: clamp(72px, 22vw, 160px) minmax(0, 1fr);
+  gap: clamp(12px, 3vw, 24px);
+  padding: clamp(12px, 3vw, 24px);
+  border: 1px solid var(--p-content-border-color);
+  border-radius: 8px;
+  background: #eff1ed;
+}
+
+:host-context(.app-dark) .cart-item {
+  background: color-mix(in srgb, var(--p-content-background) 95%, black);
+}
+.cart-image {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+.cart-item-body {
+  display: grid;
+  align-content: space-between;
+  gap: 12px;
+}
+
+.cart-item h2 {
+  font-size: clamp(16px, 3vw, 24px);
+}
+
+.item-price,
+.item-actions,
+.quantity,
+.subtotal {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.item-price,
+.item-actions {
+  flex-wrap: wrap;
+}
+
+.item-price strong {
+  font-size: clamp(20px, 4vw, 32px);
+}
+
+.pack-size {
+  padding: 5px 8px;
+  border-radius: 8px;
+  background: #ff9c91;
+  color: #7d0000;
+  font-size: 14px;
+}
+
+.item-actions,
+.subtotal {
+  justify-content: space-between;
+}
+
+.quantity,
+.remove-item {
+  min-height: 40px;
+  border: 1px solid var(--p-content-border-color);
+  border-radius: 8px;
+  background: var(--p-content-background);
+  color: inherit;
+}
+
+.quantity {
+  padding-inline: 4px;
+}
+
+.quantity button,
+.remove-item {
+  font: inherit;
+  cursor: pointer;
+}
+
+.quantity button {
+  width: 28px;
+  height: 36px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+}
+
+.quantity button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.remove-item {
+  padding-inline: 12px;
+}
+
+.subtotal {
+  margin-bottom: 16px;
+  font-weight: 700;
+}
+
+.checkout-button {
+  width: 100%;
+  padding: 12px;
+  border: 0;
+  border-radius: 8px;
+  background: #c90000;
+  color: white;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}

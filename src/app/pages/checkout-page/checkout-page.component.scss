@@ -1,0 +1,147 @@
+.checkout-page {
+  max-width: 640px;
+  padding-block: 40px;
+  font-family: system-ui, sans-serif;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 20px;
+  color: var(--p-text-muted-color);
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.back-link:hover {
+  color: var(--p-text-color);
+}
+
+.checkout-page h1 {
+  margin-bottom: 32px;
+  font-size: 24px;
+}
+
+.checkout-page h2,
+.payment-card legend {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.checkout-page form {
+  display: grid;
+  gap: 32px;
+}
+
+.checkout-card {
+  display: grid;
+  gap: 20px;
+  min-width: 0;
+  padding: clamp(16px, 4vw, 24px);
+  border: 1px solid var(--p-content-border-color);
+  border-radius: 8px;
+  background: #f5f5f5;
+}
+
+.checkout-field {
+  display: grid;
+  gap: 6px;
+}
+
+.checkout-field label {
+  font-size: 14px;
+}
+
+.checkout-field input,
+.checkout-field textarea {
+  width: 100%;
+  min-width: 0;
+}
+
+.checkout-field textarea {
+  resize: vertical;
+}
+
+.form-error {
+  color: var(--p-primary-color);
+  font-size: 13px;
+}
+
+.payment-card legend {
+  padding-inline: 6px;
+}
+
+.payment-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 1px solid var(--p-content-border-color);
+  border-radius: 7px;
+  background: var(--p-content-background);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.payment-option input {
+  accent-color: #c90000;
+  cursor: pointer;
+}
+
+.payment-option:has(input:checked) {
+  border-color: #c90000;
+}
+
+.order-summary {
+  display: grid;
+  gap: 16px;
+  padding: clamp(16px, 4vw, 24px);
+  border-radius: 8px;
+  background: #ff9c91;
+  color: #132016;
+}
+
+.summary-total {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font-weight: 600;
+}
+
+.pay-button {
+  width: 100%;
+  min-height: 40px;
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 7px;
+  background: #c90000;
+  color: white;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.pay-button:hover {
+  background: #ad0000;
+}
+
+.pay-button:focus-visible {
+  outline: 2px solid #132016;
+  outline-offset: 3px;
+}
+
+.payment-note {
+  font-size: 12px;
+  text-align: center;
+}
+
+:host-context(.app-dark) .checkout-card {
+  background: var(--p-content-background);
+}
+
+.checkout-fields {
+  display: grid;
+  gap: 32px;
+  min-width: 0;
+  border: 0;
+}

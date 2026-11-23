@@ -1,0 +1,47 @@
+<main class="base-container dashboard-page">
+  <a class="back-link" routerLink="/account">← Back to account</a>
+
+  <nav class="admin-tabs" aria-label="Admin navigation">
+    <a routerLink="/admin/products">Product Management</a>
+    <span aria-current="page">Dashboard</span>
+  </nav>
+
+  <div class="dashboard-heading">
+    <h1>Admin — Dashboard</h1>
+    <span>All time</span>
+  </div>
+
+  @if (dashboardState$ | async; as state) {
+    @if (state.error) {
+      <p role="alert">Unable to load dashboard statistics.</p>
+    } @else {
+      <section class="stats-grid" aria-label="Store statistics">
+        @for (card of state.cards; track card.title) {
+          <article class="stat-card">
+            <div class="stat-heading">
+              <div>
+                <h2>{{ card.title }}</h2>
+
+                <strong class="stat-value">
+                  @if (card.money) {
+                    {{ card.value | currency: "USD" }}
+                  } @else {
+                    {{ card.value | number }}
+                  }
+                </strong>
+              </div>
+
+              <span class="stat-icon" [class]="'stat-icon ' + card.color">
+                <i [class]="card.icon" aria-hidden="true"></i>
+              </span>
+            </div>
+
+            <p class="stat-caption">{{ card.caption }}</p>
+          </article>
+        }
+      </section>
+    }
+  } @else {
+    <p class="loading-state" role="status">Loading dashboard…</p>
+  }
+</main>

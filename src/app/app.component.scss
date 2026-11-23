@@ -1,0 +1,44 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+.page-content {
+  flex: 1;
+}
+
+.route-loader {
+  position: fixed;
+  inset: 0 0 auto;
+  height: 3px;
+  overflow: hidden;
+  background: rgb(201 0 0 / 15%);
+  z-index: 2000;
+}
+
+.route-loader::after {
+  content: "";
+  display: block;
+  width: 35%;
+  height: 100%;
+  background: #c90000;
+  animation: route-loading 1s ease-in-out infinite;
+}
+
+@keyframes route-loading {
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateX(300%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .route-loader::after {
+    width: 100%;
+    animation: none;
+  }
+}

@@ -1,0 +1,75 @@
+<main class="base-container cart-page">
+  <h1>Shopping Cart</h1>
+
+  @if (items().length > 0) {
+    <div class="cart-layout">
+      <section class="cart-items" aria-label="Cart items">
+        @for (item of items(); track item.id) {
+          <article class="cart-item">
+            <img
+              class="cart-image"
+              [src]="item.imageUrl"
+              alt=""
+              width="160"
+              height="160"
+            />
+
+            <div class="cart-item-body">
+              <h2>{{ item.name }}</h2>
+
+              <div class="item-price">
+                <strong>{{
+                  (item.priceCents * item.quantity) / 100 | currency: "USD"
+                }}</strong>
+              </div>
+
+              <div class="item-actions">
+                <div class="quantity">
+                  <button
+                    type="button"
+                    aria-label="Decrease quantity"
+                    [disabled]="item.quantity === 1"
+                    (click)="changeQuantity(item.id, -1)"
+                  >
+                    −
+                  </button>
+                  <span>{{ item.quantity }}</span>
+                  <button
+                    type="button"
+                    aria-label="Increase quantity"
+                    (click)="changeQuantity(item.id, 1)"
+                  >
+                    +
+                  </button>
+                </div>
+
+                <button
+                  class="remove-item"
+                  type="button"
+                  (click)="removeItem(item.id)"
+                >
+                  Remove <span aria-hidden="true">×</span>
+                </button>
+              </div>
+            </div>
+          </article>
+        }
+      </section>
+
+      <aside class="cart-summary">
+        <h2>Order Summary</h2>
+        <p class="subtotal">
+          <span>Subtotal</span>
+          <strong>{{ subtotalCents() / 100 | currency: "USD" }}</strong>
+        </p>
+        <button class="checkout-button" type="button" (click)="checkout()">
+          Checkout
+        </button>
+      </aside>
+    </div>
+  } @else {
+    <p class="empty-cart">
+      Your cart is empty. <a routerLink="/home">Browse products</a>
+    </p>
+  }
+</main>

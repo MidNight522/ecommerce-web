@@ -1,0 +1,36 @@
+<header class="site-header">
+  <div class="base-container header-inner">
+    <a class="brand" routerLink="/">
+      <img src="base-logo.svg" alt="" width="60" height="45" />
+      <span>The Scoville Inferno</span></a
+    >
+
+    <nav class="header-nav" aria-label="Main navigation">
+      <a routerLink="/home">Products</a>
+      <a routerLink="/pain-guides">Pain Guides</a>
+      <a routerLink="/community">Community</a>
+      <a routerLink="/resources">Resources</a>
+      <a routerLink="/contact">Contact</a>
+    </nav>
+    <div class="header-actions">
+      @if (isAuthenticated()) {
+        <a class="header-icon" routerLink="/account" aria-label="Profile">
+          <img src="assets/images/user-alt.svg" alt="" width="28" height="28" />
+        </a>
+
+        <a class="header-icon" routerLink="/cart" aria-label="Cart">
+          <img
+            src="assets/images/shopping-bag.svg"
+            alt=""
+            width="32"
+            height="32"
+          />
+        </a>
+      } @else {
+        <a class="sign-in" routerLink="/login">Sign in</a>
+        <a class="register" routerLink="/register">Register</a>
+      }
+      <ng-content />
+    </div>
+  </div>
+</header>

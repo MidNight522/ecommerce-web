@@ -1,0 +1,221 @@
+<main class="base-container products-page">
+  <img
+    class="products-banner"
+    src="assets/images/products-banner.webp"
+    alt="Carolina Reaper peppers"
+  />
+
+  <div class="catalog-layout">
+    <aside class="catalog-filters" aria-label="Product filters">
+      <section class="filter-group">
+        <h2>Keywords</h2>
+
+        <div class="keywords">
+          @for (type of selectedTypes(); track type) {
+            <button
+              class="keyword"
+              type="button"
+              [attr.aria-label]="'Remove filter ' + type"
+              (click)="toggleFilter('type', type)"
+            >
+              {{ type }} <span aria-hidden="true">×</span>
+            </button>
+          }
+
+          @for (level of selectedLevels(); track level) {
+            <button
+              class="keyword"
+              type="button"
+              [attr.aria-label]="'Remove filter ' + level"
+              (click)="toggleFilter('level', level)"
+            >
+              {{ level }} <span aria-hidden="true">×</span>
+            </button>
+          }
+        </div>
+      </section>
+
+      <fieldset class="filter-group">
+        <legend>Product Type</legend>
+
+        @for (type of productTypes; track type) {
+          <label class="filter-option">
+            <input
+              type="checkbox"
+              [checked]="selectedTypes().includes(type)"
+              (change)="toggleFilter('type', type)"
+            />
+            {{ type }}
+          </label>
+        }
+      </fieldset>
+
+      <fieldset class="filter-group">
+        <legend>Filter by Agony Level</legend>
+
+        @for (level of heatLevels; track level) {
+          <label class="filter-option">
+            <input
+              type="checkbox"
+              [checked]="selectedLevels().includes(level)"
+              (change)="toggleFilter('level', level)"
+            />
+            {{ level }}
+          </label>
+        }
+      </fieldset>
+    </aside>
+
+    <div class="catalog-main">
+      <div class="catalog-toolbar">
+        <label class="catalog-search">
+          <input
+            #searchInput
+            type="search"
+            aria-label="Search products"
+            placeholder="Find your pain"
+            [value]="search()"
+            (input)="search.set(searchInput.value); page.set(1)"
+          />
+          <i class="pi pi-search" aria-hidden="true"></i>
+        </label>
+
+        <div class="catalog-sort" aria-label="Sort products">
+          @for (option of sortOptions; track option.value) {
+            <button
+              type="button"
+              [attr.aria-pressed]="sort() === option.value"
+              (click)="sort.set(option.value); page.set(1)"
+            >
+              {{ option.label }}
+            </button>
+          }
+        </div>
+      </div>
+
+      @if (productsState$ | async; as state) {
+        @if (state.error) {
+          <p role="alert">Unable to load products. Please try again later.</p>
+        } @else {
+          @let filteredProducts = filterProducts(state.products);
+          @let pageCount = getPageCount(filteredProducts.length);
+          <section class="products-grid" aria-label="Products">
+            @for (
+              product of filteredProducts.slice(
+                (page() - 1) * pageSize,
+                page() * pageSize
+              );
+              track product.id
+            ) {
+              <article class="product-card">
+                <button
+                  class="product-image"
+                  type="button"
+                  [attr.aria-label]="'Enlarge image of ' + product.name"
+                  (click)="previewProduct.set(product); imageDialog.showModal()"
+                >
+                  <img
+                    [src]="product.image_url || 'base-logo.svg'"
+                    [alt]="product.name"
+                    loading="lazy"
+                    (error)="onImageError($event)"
+                  />
+                </button>
+
+                <a
+                  class="product-content"
+                  [routerLink]="['/product', product.id]"
+                >
+                  <h2>{{ product.name }}</h2>
+
+                  <strong class="product-price">
+                    {{ product.price | currency: "USD" }}
+                  </strong>
+
+                  @if (product.scoville !== null) {
+                    <span class="product-heat">
+                      <i class="pi pi-bolt" aria-hidden="true"></i>
+                      {{ product.scoville | number }} SHU
+                    </span>
+                  }
+
+                  <p class="product-description">
+                    {{ product.description }}
+                  </p>
+                </a>
+              </article>
+            } @empty {
+              <p>No products match your filters.</p>
+            }
+          </section>
+          @if (pageCount > 1) {
+            <nav class="catalog-pagination" aria-label="Product pages">
+              <button
+                type="button"
+                [disabled]="page() === 1"
+                (click)="page.set(page() - 1)"
+              >
+                ← Weaker
+              </button>
+
+              @let pageNumbers = getPageNumbers(pageCount);
+
+              @for (number of pageNumbers; track number; let index = $index) {
+                @if (index > 0 && number - pageNumbers[index - 1] > 1) {
+                  <span class="pagination-gap" aria-hidden="true">…</span>
+                }
+
+                <button
+                  class="page-number"
+                  type="button"
+                  [attr.aria-label]="'Page ' + number"
+                  [attr.aria-current]="page() === number ? 'page' : null"
+                  (click)="page.set(number)"
+                >
+                  {{ number }}
+                </button>
+              }
+
+              <button
+                type="button"
+                [disabled]="page() === pageCount"
+                (click)="page.set(page() + 1)"
+              >
+                Stronger →
+              </button>
+            </nav>
+          }
+        }
+      } @else {
+        <p class="loading-state" role="status">Loading products…</p>
+      }
+    </div>
+  </div>
+</main>
+
+<dialog
+  #imageDialog
+  class="image-preview"
+  aria-label="Product image preview"
+  (close)="previewProduct.set(null)"
+  (click)="$event.target === imageDialog && imageDialog.close()"
+>
+  <button
+    class="preview-close"
+    type="button"
+    aria-label="Close image preview"
+    autofocus
+    (click)="imageDialog.close()"
+  >
+    <i class="pi pi-times" aria-hidden="true"></i>
+  </button>
+
+  @if (previewProduct(); as product) {
+    <img
+      [src]="product.image_url || 'base-logo.svg'"
+      [alt]="product.name"
+      (error)="onImageError($event)"
+    />
+    <p>{{ product.name }}</p>
+  }
+</dialog>
