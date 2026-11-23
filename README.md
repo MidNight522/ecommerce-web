@@ -2,6 +2,9 @@
 
 An educational ecommerce application for hot sauces and spices, built with Angular 19, TypeScript, SCSS and PrimeNG.
 
+🚀 Live Demo
+👉 https://english-wizard-studio.vercel.app
+
 ## Features
 
 - Product catalogue with search, filters, sorting and pagination.
